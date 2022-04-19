@@ -102,7 +102,7 @@ class index
                         echo '<tr>';
                             echo '<td>', $rec['id'], '</td>';
                             echo '<td>', $rec['title'], '</td>';
-                            echo '<td>', $rec['content'], '</td>';
+                            echo '<td>', nl2br($rec['content']), '</td>';
                             echo '<td>', $rec['created_at'], '</td>';
                             echo '<td>', $rec['updated_at'], '</td>';
                             echo '<form method="post" action="branch.php">';
@@ -145,7 +145,7 @@ class index
         }   
         catch (Exception $e)
         {   
-    	    print 'データベース接続エラ〜。';
+    	    print 'データベース接続エラー。';
     	    exit();
         }   
     }   
