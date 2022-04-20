@@ -10,46 +10,38 @@
 <body>
 
 <?php
+require "dbconnect.php";
 class Edit
 {
-    function Edit()
+    private $id;
+
+    public function __construct($id)
     {
-        try
-        {
-            $id = $_GET['edit'];
-            $id = htmlspecialchars($id,ENT_QUOTES,'UTF-8');
+        $this->id = $id;
+    }
+    public function edit()
+    {
+        $dbh = databaseConnect();       
+        $sql = 'SELECT title,content,updated_at FROM mst_todo WHERE id=?';
+        $stmt = $dbh->prepare($sql);
+        $data[] = $this->id;
+        $stmt->execute($data);
+        $rec = $stmt->fetch(PDO::FETCH_ASSOC);
         
-            $dsn ='mysql:dbname=todo;host=localhost;charset=utf8';
-            $user ='root';
-            $password = '';
-            $dbh = new PDO($dsn, $user, $password);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-            $sql = 'SELECT title,content,updated_at FROM mst_todo WHERE id=?';
-            $stmt = $dbh->prepare($sql);
-            $data[] = $id;
-            $stmt->execute($data);
-            $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            $title = $rec['title'];
-            $contents = $rec['content'];
-            $title = htmlspecialchars($title,ENT_QUOTES,'UTF-8');
-            $contents = htmlspecialchars($contents,ENT_QUOTES,'UTF-8');
-        
-            $dbh= null;
-        }
-        catch (Exception $e)
-        {
-            echo 'ただいま障害により大変ご迷惑をおかけしております。';
-            exit();
-        }
+        $title = $rec['title'];
+        $contents = $rec['content'];
+        $title = htmlspecialchars($title,ENT_QUOTES,'UTF-8');
+        $contents = htmlspecialchars($contents,ENT_QUOTES,'UTF-8');
     
-        return array($id, $title, $contents);
+        return $rec;
+        $dbh= null;
     }
 }
 
-$edit = new Edit();
-$arrays = $edit->Edit();
+$id = $_GET['edit'];
+$id = htmlspecialchars($id,ENT_QUOTES,'UTF-8');
+$edit = new Edit($id);
+$recs = $edit->edit();
 
 ?>
 
@@ -58,15 +50,15 @@ $arrays = $edit->Edit();
 </h1>
 <form method="post" action="edit_check.php">
     <div style="margin: 10px">
-        <input type="hidden" name="id" value="<?php echo $arrays[0]; ?>">
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
     </div>
     <div style="margin: 10px">
         <label for="title">タイトル：</label>
-        <input type="text" name="title" value="<?php echo $arrays[1]; ?>">
+        <input type="text" name="title" value="<?php echo $recs['title']; ?>">
     </div>
     <div style="margin: 10px">
         <label for="content">内容：</label>
-        <textarea name="contents" rows="8" cols="40"><?php echo $arrays[2]; ?></textarea>
+        <textarea name="contents" rows="8" cols="40"><?php echo $recs['content']; ?></textarea>
     </div>
     <br />
     <input type="button" onclick="history.back()" value="戻る">

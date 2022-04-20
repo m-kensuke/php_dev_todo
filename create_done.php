@@ -7,44 +7,43 @@
 <body>
 
 <?php
-class create_done
+require "dbconnect.php";
+//require "create_check.php";
+
+class CreateDone
 {
-	function CreateDone()
+	private $title;
+	private $contents;
+	
+
+	public function __construct($title, $contents)
 	{
-		try
-		{
-			$title = $_POST['title'];
-			$contents = $_POST['contents'];
-	
-			$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
-			$contents = htmlspecialchars($contents, ENT_QUOTES, 'UTF-8');
-	
-			$dsn = 'mysql:dbname=todo;host=localhost;charset=utf8';
-			$user = 'root';
-			$password ='';
-			$dbh = new PDO($dsn, $user, $password);
-			$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	
-			$sql = 'INSERT INTO mst_todo(title,content,created_at,updated_at) VALUES (?,?,CURRENT_TIME,CURRENT_TIME)';
-			$stmt = $dbh->prepare($sql);
-			$data[] = $title;
-			$data[] = $contents;
-			$stmt->execute($data);
-			$dbh = null;
-	
-			echo $title;
-			echo 'を追加しました。<br />';
-	
-		}
-		catch (Exception $e)
-		{
-			echo 'ただいま故障により大変ご迷惑をおかけしております。';
-			exit();
-		}
+		$this->title = $title;
+		$this->contents = $contents;
+	}
+
+	public function CreateDone()
+	{
+		$dbh = databaseConnect();
+		$sql = 'INSERT INTO mst_todo(title,content,created_at,updated_at) VALUES (?,?,CURRENT_TIME,CURRENT_TIME)';
+		$stmt = $dbh->prepare($sql);
+		$data[] = $this->title;
+		$data[] = $this->contents;
+		$stmt->execute($data);
+		$dbh = null;
+
+		return $this->title;
 	}
 }
-$create_done = new create_done();
-$create_done->CreateDone();
+$id = $_POST['id'];
+$title = $_POST['title'];
+$contents = $_POST['contents'];
+$create_done = new CreateDone($title, $contents);
+$title = $create_done->CreateDone();
+
+echo $title;
+echo 'を追加しました。<br />';
+
 ?>
 
 <a href="index.php">戻る</a>
