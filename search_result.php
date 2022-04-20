@@ -10,9 +10,9 @@
 <body>
 
 <?php
-class search_result
+class Search_result
 {
-    function SearchResult(){
+    function earchResult(){
         try
         {   
             
@@ -161,8 +161,8 @@ class search_result
     }
 }
 
-$search_result = new search_result();
-$search_result->SearchResult();
+$search_result = new Search_result();
+$search_result->searchResult();
 
 ?>
 	
