@@ -24,6 +24,7 @@ class Branch
 			$search = $_POST['search_word'];
 			$search = htmlspecialchars($search,ENT_QUOTES,'UTF-8');
 			header('Location: search_result.php?search='.$search);
+			
 		}
 	}
 }

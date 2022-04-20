@@ -8,7 +8,7 @@
 
 <?php
 //require "create_check.php";
-class edit_check
+class EditCheck
 {
 	private $title;
 	private $contents;
@@ -37,7 +37,7 @@ $id = $_POST['id'];
 $title = $_POST['title'];
 $contents = $_POST['contents'];
 
-$edit_check = new edit_check($title, $contents);
+$edit_check = new EditCheck($title, $contents);
 $title = $edit_check->titleCheck();
 $contents = $edit_check->contentCheck();
 //check = new create_check($title, $contents);

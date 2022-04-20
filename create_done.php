@@ -27,15 +27,15 @@ class CreateDone
 		$dbh = databaseConnect();
 		$sql = 'INSERT INTO mst_todo(title,content,created_at,updated_at) VALUES (?,?,CURRENT_TIME,CURRENT_TIME)';
 		$stmt = $dbh->prepare($sql);
-		$data[] = $this->title;
-		$data[] = $this->contents;
+		$data = array($this->title,  $this->contents);
+		//$data[] = $this->contents;
 		$stmt->execute($data);
 		$dbh = null;
 
 		return $this->title;
 	}
 }
-$id = $_POST['id'];
+
 $title = $_POST['title'];
 $contents = $_POST['contents'];
 $create_done = new CreateDone($title, $contents);

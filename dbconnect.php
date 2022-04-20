@@ -6,8 +6,8 @@ function databaseConnect()
     $password = '';
     try
     {    
-        $dbh = new PDO($dsn, $user, $password); //PDOクラスをインスタンス化
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //setAtt~メソッドを参照
+        $dbh = new PDO($dsn, $user, $password); 
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
 
     }
     catch(Exception $e)
