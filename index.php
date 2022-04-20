@@ -106,6 +106,7 @@ class Index
         if ($nowPage < $totalPage) echo "<a href='./index.php?page_no=$next' style='padding: 5px;'>次へ</a>";
     }   
 }
+
 $index = new Index();
 
 ?>
