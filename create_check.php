@@ -9,58 +9,49 @@
 <?php
 class create_check
 {
-	function CreateCheck()
+	private $title;
+	private $contents;
+
+	function __construct($title, $contents)
 	{
-		$title = $_POST['title'];
-		$contents = $_POST['contents'];
-		
-		$title = htmlspecialchars($title,ENT_QUOTES,'UTF-8');
-		$contents = htmlspecialchars($contents,ENT_QUOTES,'UTF-8');
-		
-		if($title == '')
-		{
-			print 'タイトルを入力してください<br />';
-		}
-		else
-		{
-			print 'タイトル：';
-			print $title;
-			print '<br />';
-		}
-		
-		if($contents == '')
-		{
-			print '内容を入力してください<br />';
-		}
-		else
-		{
-			echo '内容：';
-			echo $contents;
-			echo '<br /><br />';
-		
-		}
-		
-		if($title == '' || $contents == '')
-		{
-			print '<form>';
-			print '<input type="button" onclick="history.back()" value="戻る">';
-			print '</form>';
-		}
-		else
-		{
-			echo '<form method="post" action="create_done.php">';
-			echo '<input type="hidden" name="title" value="'.$title.'">';
-			echo '<input type="hidden" name="contents" value="'.$contents.'">';
-			echo '<br />';
-			echo '<input type="button" onclick="history.back()" value="戻る">';
-			echo '<input type="submit" value="投稿する">';
-			echo '</form>';
-		}
+		$this->title = $title;
+		$this->contents = $contents;
+	}
+
+	function titleCheck()
+	{
+		if($this->title == false) echo 'タイトルを入力してください<br />';
+		if($this->title) echo 'タイトル：'.$this->title.'<br />';
+		return $this->title;
+	}
+
+	function contentCheck()
+	{
+		if($this->contents == false) echo '内容を入力してください<br />';
+		if($this->contents) echo '内容：'.$this->contents.'<br /><br />';
+		return $this->contents;
 	}
 }
 
-$create_check = new create_check();
-$create_check->CreateCheck();
+$title = $_POST['title'];
+$contents = $_POST['contents'];
+//$title = htmlspecialchars($title,ENT_QUOTES,'UTF-8');
+//$contents = htmlspecialchars($contents,ENT_QUOTES,'UTF-8');
+		
+$create_check = new create_check($title, $contents);
+$title = $create_check->titleCheck();
+$contents = $create_check->contentCheck();
+
+if($title == false || $contents == false)	echo '<form><input type="button" onclick="history.back()" value="戻る"></form>';
+if($title && $contents)
+{
+	echo '<form method="post" action="create_done.php">';
+	echo '<input type="hidden" name="title" value="'.$title.'">';
+	echo '<input type="hidden" name="contents" value="'.$contents.'">';
+	echo '<input type="button" onclick="history.back()" value="戻る">';
+	echo '<input type="submit" value="投稿する">';
+	echo '</form>';
+}
 
 ?>
 
