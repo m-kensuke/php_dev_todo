@@ -7,8 +7,9 @@
 <body>
 
 <?php
-require "dbconnect.php";
+require_once "dbconnect.php";
 //require "create_check.php";
+//use DBconnect;
 
 class CreateDone
 {

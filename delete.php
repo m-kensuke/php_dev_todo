@@ -1,5 +1,6 @@
 <?php
-require "dbconnect.php";
+require_once "dbconnect.php";
+//use DBconnect;
 
 class delete
 {
@@ -27,8 +28,6 @@ $id = $_GET['delete'];
 
 $delete = new Delete($id);
 $delete->delete();
-
-
 
 ?>
 <!DOCTYPE html>
