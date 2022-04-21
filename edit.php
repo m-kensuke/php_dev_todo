@@ -22,24 +22,24 @@ class Edit
     public function edit()
     {
         $dbh = databaseConnect();       
-        $sql = 'SELECT title,content,updated_at FROM mst_todo WHERE id=?';
+        $sql = "SELECT title,content,updated_at FROM mst_todo WHERE id=$this->id";
         $stmt = $dbh->prepare($sql);
-        $data[] = $this->id;
-        $stmt->execute($data);
+        //$data = $this->id;
+        $stmt->execute();
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        $title = $rec['title'];
-        $contents = $rec['content'];
-        $title = htmlspecialchars($title,ENT_QUOTES,'UTF-8');
-        $contents = htmlspecialchars($contents,ENT_QUOTES,'UTF-8');
-    
+        //$title = $rec['title'];
+        //$contents = $rec['content'];
+        //$title = htmlspecialchars($title,ENT_QUOTES,'UTF-8');
+        //$contents = htmlspecialchars($contents,ENT_QUOTES,'UTF-8');
         return $rec;
-        $dbh= null;
+        $dbh = null;
     }
 }
 
-$id = $_GET['edit'];
+$id = (int) $_GET['edit'];
 $id = htmlspecialchars($id,ENT_QUOTES,'UTF-8');
+
 $edit = new Edit($id);
 $recs = $edit->edit();
 

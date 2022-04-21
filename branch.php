@@ -22,9 +22,8 @@ class Branch
 		if(isset($_POST['search_word']) == true)
 		{
 			$search = $_POST['search_word'];
-			$search = htmlspecialchars($search,ENT_QUOTES,'UTF-8');
-			header('Location: search_result.php?search='.$search);
-			
+			//$search = htmlspecialchars($search,ENT_QUOTES,'UTF-8');
+			header('Location: search_result_display.php?search='.$search);
 		}
 	}
 }

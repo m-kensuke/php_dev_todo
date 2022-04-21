@@ -1,4 +1,6 @@
 <?php
+//namespace Dbconnect;
+
 function databaseConnect()
 {
     $dsn = 'mysql:dbname=todo;host=localhost;charset=utf8';;
@@ -6,11 +8,11 @@ function databaseConnect()
     $password = '';
     try
     {    
-        $dbh = new PDO($dsn, $user, $password); 
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+        $dbh = new \PDO($dsn, $user, $password); 
+        $dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); 
 
     }
-    catch(Exception $e)
+    catch(\PDOException $e)
     {
         echo "データベース接続エラー";
         exit;

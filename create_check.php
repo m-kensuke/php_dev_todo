@@ -7,7 +7,7 @@
 <body>
 
 <?php
-class create_check
+class Check
 {
 	private $title;
 	private $contents;

@@ -1,115 +1,92 @@
-<!doctype html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Index Page</title>
-</head>
-<body>
-
 <?php
-require "dbconnect.php";
+//4/20夜にindex2.phpから移植してきた。それに伴いpage.phpも新規で作成。
+//4/21 
+
+require_once ("dbconnect.php");
+//use Dbconnect;
+
+define('MAX_VIEW', 5); //最大５件表示
 class Index
 {
-    function index()
+    public function get5data($nowPage)
     {
         $dbh = databaseConnect();
-
-        //ページ数計算
-        define('max_view', 5);
-        $count = $dbh->prepare('SELECT COUNT(*) AS count FROM mst_todo');
-        $count->execute();
-        $totalCount = $count->fetch(PDO::FETCH_ASSOC);
-        $totalPage = ceil($totalCount['count'] / max_view);    //celi:切り上げ
-        //現在ページ番号取得
-        if(!isset($_GET['page_no']))
-        { 
-            $nowPage = 1;
-        }
-        else
-        {
-            $nowPage = $_GET['page_no'];
-        }
-        //前へ・次への処理
-        $prev = max($nowPage - 1, 1);
-        $next = min($nowPage + 1, $totalPage);
-        $nowPage = htmlspecialchars($nowPage,ENT_QUOTES,'UTF-8');
-        $prev = htmlspecialchars($prev,ENT_QUOTES,'UTF-8');
-        $next = htmlspecialchars($next,ENT_QUOTES,'UTF-8');
-        //ToDoリストの情報取得
         $select = $dbh->prepare("SELECT * FROM mst_todo ORDER BY id ASC LIMIT :start,:max");
+        
         //:startと:maxに値を代入	
         if ($nowPage == 1)
         {
             $select->bindValue(":start", $nowPage -1,PDO::PARAM_INT);
-            $select->bindValue(":max", max_view,PDO::PARAM_INT);
+            $select->bindValue(":max", MAX_VIEW,PDO::PARAM_INT);
         }
-        else 
+        if($nowPage != 1) 
         {
-            $select->bindValue(":start", ($nowPage -1 ) * max_view,PDO::PARAM_INT);
-            $select->bindValue(":max", max_view,PDO::PARAM_INT);
+            $select->bindValue(":start", ($nowPage -1 ) * MAX_VIEW,PDO::PARAM_INT);
+            $select->bindValue(":max", MAX_VIEW,PDO::PARAM_INT);
         }
         $select->execute();
-        $rec = $select->fetchAll(PDO::FETCH_ASSOC); 
+        $result = $select->fetchAll(PDO::FETCH_ASSOC); 
+        return $result;
         $dbh= null;
-        echo '<h1>ToDo List Page</h1>';
-        //新規作成
-        echo '<form action="create.php"><button type="submit" style="padding: 10px;font-size: 16px;margin-bottom: 10px">New Todo</button></form>';
-        //検索機能
-        echo '検索';
-        echo '<form method="post" action="branch.php">';
-            echo '<input type="text" name="search_word" style="font-size: 16px; margin-bottom: 15px">';
-            echo ' ';
-            echo '<input type="submit" name="search" style="font-size: 16px;margin-bottom: 15px" value="検索">';
-        echo '</form>';
-        //ToDoリスト表示
-        echo '<table border="1">';
-            echo '<colgroup span="5"></colgroup>';
-            echo '<tr>';
-                echo '<th>ID</th>';
-                echo '<th>タイトル</th>';
-                echo '<th>内容</th>';
-                echo '<th>作成日時</th>';
-                echo '<th>更新日時</th>';
-                echo '<th>編集</th>';
-                echo '<th>削除</th>';
-            echo '</tr>';
-                foreach($rec as $rec)
-                {
-    	            if($rec == false)
-    	            {
-    		            break;
-    	            }
-                    echo '<tr>';
-                        echo '<td>', $rec['id'], '</td>';
-                        echo '<td>', $rec['title'], '</td>';
-                        echo '<td>', nl2br($rec['content']), '</td>';
-                        echo '<td>', $rec['created_at'], '</td>';
-                        echo '<td>', $rec['updated_at'], '</td>';
-                        echo '<form method="post" action="branch.php">';
-                        echo '<td><button type="submit" name="edit" value="'.$rec['id'].'" style="padding: 10px;font-size: 16px;">編集する</button></td>';
-                        echo '<td><button type="submit" name="delete" value="'.$rec['id'].'" style="padding: 10px;font-size: 16px;">削除する</button></td>';
-                        echo '</form>';
-                    echo '</tr>';
-                }
-        echo '</table>';
+    }
+}
 
-        //ページ番号
-        if ($nowPage > 1) echo "<a href='./index.php?page_no=$prev' style='padding: 5px'>前へ</a>";
+class Page
+{
+    public function databaseCount()
+    {
+        $dbh = databaseConnect();
+        $count = $dbh->prepare('SELECT COUNT(*) AS count FROM mst_todo');
+        $count->execute();
+        $totalCount = $count->fetch(PDO::FETCH_ASSOC);
+        return $totalCount;
+        $dbh = null;
+    }
+
+    public function totalPage($totalCount)
+    {
+        $totalPage = ceil($totalCount['count'] / MAX_VIEW);    //celi:切り上げ
+        return $totalPage;
+    }
+
+    public function nowPage()
+    {
+        //現在ページ番号取得
+        if(!isset($_GET['page_no'])) $nowPage = 1;
+        if(!isset($_GET['page_no']) == null) $nowPage = $_GET['page_no'];
+        return $nowPage;
+
+    }
+
+    public function previewNext($nowPage, $totalPage)
+    {
+        //前へ・次への処理
+        $prev = max($nowPage - 1, 1);
+        $next = min($nowPage + 1, $totalPage);
+        $prev = htmlspecialchars($prev,ENT_QUOTES,'UTF-8');
+        $next = htmlspecialchars($next,ENT_QUOTES,'UTF-8');
+        return $previewNext = array($prev, $next);
+        
+    }
+
+    public function pageDisplay($nowPage, $totalPage, $previewNext)
+    {
+        //ページ番号表示
+        if ($nowPage > 1) echo "<a href='./indexdisplay.php?page_no=$previewNext[0]' style='padding: 5px'>前へ</a>";
         for ($n = 1; $n <= $totalPage; $n ++)
         {
             if ($n == $nowPage) echo "<span style='padding: 5px;'>$nowPage</span>";
-    	    if($n != $nowPage) echo "<a href='./index.php?page_no=$n' style='padding: 5px;'>$n</a>";
+	        if($n != $nowPage) echo "<a href='./indexdisplay.php?page_no=$n' style='padding: 5px;'>$n</a>";
         }
-        if ($nowPage < $totalPage) echo "<a href='./index.php?page_no=$next' style='padding: 5px;'>次へ</a>";
-    }   
+        if ($nowPage < $totalPage) echo "<a href='./indexdisplay.php?page_no=$previewNext[1]' style='padding: 5px;'>次へ</a>";
+    }
 }
-
 $index = new Index();
-
+$page  =new Page();
+$totalCount = $page->databaseCount();
+$totalPage = $page->totalPage($totalCount);
+$nowPage = $page->nowPage($totalPage);
+$results = $index->get5data($nowPage);
+$previewNext =  $page->previewNext($nowPage, $totalPage);
+//var_dump($previewNext);
 ?>
-
-</body>
-</html>

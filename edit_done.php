@@ -8,7 +8,7 @@
 
 <?php
 require "dbconnect.php";
-
+//use DBconnect;
 class EditDone
 {
 	private $id;
@@ -50,7 +50,7 @@ echo 'を編集しました。<br />';
 
 ?>
 
-<a href="index.php">戻る</a>
+<a href="indexdisplay.php">戻る</a>
 
 </body>
 </html>
