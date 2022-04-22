@@ -15,7 +15,6 @@ class CreateDone
 {
 	private $title;
 	private $contents;
-	
 
 	public function __construct($title, $contents)
 	{
@@ -47,7 +46,7 @@ echo 'を追加しました。<br />';
 
 ?>
 
-<a href="index.php">戻る</a>
+<a href="index_display.php">戻る</a>
 
 </body>
 </html>

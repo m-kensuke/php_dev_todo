@@ -1,8 +1,6 @@
 <?php
 require_once "dbconnect.php";
-//use DBconnect;
-
-class delete
+class Delete
 {
 	private $id;
 	function __construct($id)
@@ -24,11 +22,8 @@ class delete
 }
 
 $id = $_GET['delete'];
-//$id = htmlspecialchars($id,ENT_QUOTES,'UTF-8'); //idは基本hiddenやからhtmlspecialcharしない
-
 $delete = new Delete($id);
 $delete->delete();
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,6 +33,6 @@ $delete->delete();
 </head>
 <body>
 	<p>削除しました。<br /><br /></p>
-	<a href="index.php">戻る</a>
+	<a href="index_display.php">戻る</a>
 </body>
 </html>

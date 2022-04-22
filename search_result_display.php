@@ -16,7 +16,7 @@ require "search_result.php"
 <h1>Search Result Page</h1>
 <!--検索結果表示-->
 <p>検索ワード：<?php echo $search; ?><br /></p>
-<p>ヒット件数：<?php echo $resultNum; ?><br /><br /></p>
+<p>ヒット件数：<?php echo $totalCount; ?><br /><br /></p>
 <!--ToDoリスト表示-->
 <table border="1">
 <colgroup span="5"></colgroup>
@@ -29,17 +29,17 @@ require "search_result.php"
         <th>編集</th>
         <th>削除</th>
     </tr>
-    <?php foreach($results as $result): ?>
-        <?php if($result == false) break;?>
+    <?php foreach($result as $results): ?>
+        <?php if($results == false) break;?>
         <form method="post" action="branch.php">
             <tr>
-                <td><?php echo $result['id'];?></td>
-                <td><?php echo $result['title'];?></td>
-                <td><?php echo nl2br($result['content']);?></td>
-                <td><?php echo $result['created_at'];?></td>
-                <td><?php echo $result['updated_at'];?></td>
-                <td><button type="submit" name="edit" value="<?php echo $result['id']?>" style="padding: 10px;font-size: 16px;">編集する</button></td>
-                <td><button type="submit" name="delete" value="<?php echo $result['id']?>" style="padding: 10px;font-size: 16px;">削除する</button></td>
+                <td><?php echo $results['id'];?></td>
+                <td><?php echo $results['title'];?></td>
+                <td><?php echo nl2br($results['content']);?></td>
+                <td><?php echo $results['created_at'];?></td>
+                <td><?php echo $results['updated_at'];?></td>
+                <td><button type="submit" name="edit" value="<?php echo $results['id']?>" style="padding: 10px;font-size: 16px;">編集する</button></td>
+                <td><button type="submit" name="delete" value="<?php echo $results['id']?>" style="padding: 10px;font-size: 16px;">削除する</button></td>
             </tr>
         </form>
     <?php endforeach; ?>

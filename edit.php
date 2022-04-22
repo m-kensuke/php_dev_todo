@@ -26,22 +26,16 @@ class Edit
         $stmt = $dbh->prepare($sql);
         //$data = $this->id;
         $stmt->execute();
-        $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        //$title = $rec['title'];
-        //$contents = $rec['content'];
-        //$title = htmlspecialchars($title,ENT_QUOTES,'UTF-8');
-        //$contents = htmlspecialchars($contents,ENT_QUOTES,'UTF-8');
-        return $rec;
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
         $dbh = null;
     }
 }
 
 $id = (int) $_GET['edit'];
 $id = htmlspecialchars($id,ENT_QUOTES,'UTF-8');
-
 $edit = new Edit($id);
-$recs = $edit->edit();
+$result = $edit->edit();
 
 ?>
 
@@ -54,11 +48,11 @@ $recs = $edit->edit();
     </div>
     <div style="margin: 10px">
         <label for="title">タイトル：</label>
-        <input type="text" name="title" value="<?php echo $recs['title']; ?>">
+        <input type="text" name="title" value="<?php echo $result['title']; ?>">
     </div>
     <div style="margin: 10px">
         <label for="content">内容：</label>
-        <textarea name="contents" rows="8" cols="40"><?php echo $recs['content']; ?></textarea>
+        <textarea name="contents" rows="8" cols="40"><?php echo $result['content']; ?></textarea>
     </div>
     <br />
     <input type="button" onclick="history.back()" value="戻る">
