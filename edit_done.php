@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Create Done Page</title>
-</head>
-<body>
-
 <?php
 require "dbconnect.php";
 //use DBconnect;
@@ -25,9 +17,12 @@ class EditDone
 	{
 		$dbh = databaseConnect();
 		$stmt = $dbh->prepare($sql);
-		$stmt->excute($data);
+		if($data) $stmt->excute($data);
+		if($data == null) $stmt->excute();
+		//if()
+		//$stmt->excute($data);
 		$dbh = null;
-	} 
+	}
 
 	public function EditDone()
 	{
@@ -44,13 +39,15 @@ $title = $_POST['title'];
 $contents = $_POST['contents'];
 $edit_done = new EditDone($id, $title, $contents);
 $edit_done->EditDone();
-
-echo $title;
-echo 'を編集しました。<br />';
-
 ?>
-
-<a href="indexdisplay.php">戻る</a>
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Create Done Page</title>
+</head>
+<body>
+<h4>タイトル「<?echo $title; ?>」を編集しました。<br /></h4>
+<a href="index_display.php">戻る</a>
 </body>
 </html>

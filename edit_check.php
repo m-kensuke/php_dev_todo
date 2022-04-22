@@ -8,32 +8,7 @@
 
 <?php
 //require "create_check.php";
-class Check
-{
-	private $title;
-	private $contents;
-
-	public function __construct($title, $contents)
-	{
-		$this->title = $title;
-		$this->contents = $contents;
-    }
-	public function titleCheck()
-	{
-		if($this->title == false) echo 'タイトルを入力してください<br />';
-		if($this->title && mb_strlen($this->title) > 40) echo 'タイトルが文字数オーバーです！<br />';
-		if($this->title && mb_strlen($this->title) < 40) echo 'タイトル：'.$this->title.'<br />';
-		return $this->title;
-	}
-	public function contentCheck()
-	{
-		if($this->contents == false) echo '内容を入力してください<br />';
-		if($this->contents && mb_strlen($this->title) > 255) echo '内容が文字数オーバーです<br />';
-		if($this->contents && mb_strlen($this->title) < 255) echo '内容：'.$this->contents.'<br /><br />';
-		return $this->contents;
-	}
-
-}
+require "check.php";
 
 $id = $_POST['id'];
 $title = $_POST['title'];
@@ -42,12 +17,8 @@ $contents = $_POST['contents'];
 $edit_check = new Check($title, $contents);
 $title = $edit_check->titleCheck();
 $contents = $edit_check->contentCheck();
-//check = new create_check($title, $contents);
-//$check->titleCheck();
-//$check->contentCheck();
 
 if($title == false || $contents == false) echo '<form><input type="button" onclick="history.back()" value="戻る"></form>';
-
 if($title && $contents)
 {
 	echo '<form method="post" action="edit_done.php">';

@@ -7,38 +7,12 @@
 <body>
 
 <?php
-class Check
-{
-	private $title;
-	private $contents;
-
-	function __construct($title, $contents)
-	{
-		$this->title = $title;
-		$this->contents = $contents;
-	}
-
-	function titleCheck()
-	{
-		if($this->title == false) echo 'タイトルを入力してください<br />';
-		if($this->title) echo 'タイトル：'.$this->title.'<br />';
-		return $this->title;
-	}
-
-	function contentCheck()
-	{
-		if($this->contents == false) echo '内容を入力してください<br />';
-		if($this->contents) echo '内容：'.$this->contents.'<br /><br />';
-		return $this->contents;
-	}
-}
+require "check.php";
 
 $title = $_POST['title'];
 $contents = $_POST['contents'];
-//$title = htmlspecialchars($title,ENT_QUOTES,'UTF-8');
-//$contents = htmlspecialchars($contents,ENT_QUOTES,'UTF-8');
 		
-$create_check = new create_check($title, $contents);
+$create_check = new Check($title, $contents);
 $title = $create_check->titleCheck();
 $contents = $create_check->contentCheck();
 
