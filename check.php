@@ -26,6 +26,8 @@ class Check
 		if($this->contents && mb_strlen($this->title) < 255) echo '内容：'.$this->contents.'<br /><br />';
 		return $this->contents;
 	}
+
+	
 }
 
 ?>

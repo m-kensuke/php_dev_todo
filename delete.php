@@ -21,9 +21,10 @@ class Delete
 	}
 }
 
-$id = $_GET['delete'];
+$id = $_POST['delete'];
 $delete = new Delete($id);
 $delete->delete();
+
 ?>
 <!DOCTYPE html>
 <html>
