@@ -1,7 +1,6 @@
 <?php
 define('MAX_VIEW', 5);//最大５件表示
-
-class MySQL
+class DBconnect
 {
     protected  $dbh;
     public function __construct()
@@ -9,7 +8,6 @@ class MySQL
         $dsn = 'mysql:dbname=todo;host=localhost;charset=utf8';;
         $user = 'root';
         $password = '';
-
         try
         {    
             $this->dbh = new PDO($dsn, $user, $password); 
@@ -25,8 +23,5 @@ class MySQL
     {
         $this->dbh = null;
     }
-    
 }
-
-
 ?>

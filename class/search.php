@@ -1,6 +1,6 @@
 <?php
-require_once 'class/mysql.php';
-class Search extends MySQL
+require_once 'class/dbconnect.php';
+class Search extends DBconnect
 {
     function searchDataCount($like_search)
     {
@@ -11,16 +11,11 @@ class Search extends MySQL
         $totalCount = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int) $totalCount['count'];
         $this->dataBaseDisconnect();
-
     }
-
     public function get5SearchData($like_search, $nowPage)
     {
-        //検索結果取得
-        //define('MAX_VIEW', 5);
         $sql = "SELECT * FROM mst_todo WHERE title LIKE :search LIMIT :start,:max";
         $stmt = $this->dbh->prepare($sql);
-        //$stmt = $this->dbh->prepare($this->sql);
         if ($nowPage == 1)
         {
             $stmt->bindValue(":search", $like_search, PDO::PARAM_STR);
@@ -38,7 +33,6 @@ class Search extends MySQL
         return $results;
         $this->dataBaseDisconnect();
     }
-
 }
 
 ?>

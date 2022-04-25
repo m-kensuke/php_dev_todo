@@ -1,35 +1,8 @@
 <?php
-require_once "dbconnect.php";
-class DeleteCheck
-{
-    private $id;
-	function __construct($id)
-	{
-		$this->id = $id;
-	}
-    public function deleteContents()
-    {
-        $dbh = databaseConnect();
-        $sql = "SELECT title,content FROM mst_todo WHERE id=$this->id";
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute();
-        $results = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $results;
-        $dbh = null;
-
-    }
-
-    public function deleteCheck($results)
-    {   
-        echo '<input type="hidden" name="title" value="'.$results['title'].'">';
-		echo '<input type="hidden" name="contents" value="'.$results['content'].'">';
-        echo '<input class="btn btn-primary me-md-2" type="button" onclick="history.back()" value="戻る">';
-        echo '<input class="btn btn-primary me-md-2 ml-1" type="submit" value="削除する">';
-    }
-}
+require_once "class/delete.php";
 
 $id = $_GET['delete'];
-$delete_check = new DeleteCheck($id);
+$delete_check = new Delete($id);
 $results = $delete_check->deleteContents();
 
 ?>

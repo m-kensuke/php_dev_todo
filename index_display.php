@@ -1,6 +1,5 @@
 <?php include 'inc/head.php'; ?>
 <?php require_once "index.php"; ?>
-
 <body class="pl-4 pr-4" >
     <header>
         <div class="mt-5 mb-3">
@@ -14,10 +13,9 @@
                 <button class="btn btn-primary me-md-2" type="submit" style="padding: 10px;font-size: 30px;margin-bottom: 10px">New Todo</button>
             </form>
         </div>
-        <!--<h4>検索</h4>-->
         <!--検索機能-->
         <div class ="col align-self-center">
-            <form method="post" action="branch.php">
+            <form method="post" action="class/branch.php">
                 <input class="form-control-lg" type="text" placeholder="検索ワードを入力" name="search_word" style="font-size: 20px; margin-bottom: 15px">
                 <input class="btn btn-primary" type="submit" name="search" style="font-size: 20px;margin-bottom: 7px" value="検索">
             </form>

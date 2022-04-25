@@ -1,6 +1,6 @@
 <?php
-require_once "class/mysql.php";
-class Index extends MySQL
+require_once "class/dbconnect.php";
+class Index extends DBconnect
 {
     function dataCount()
     {
@@ -12,7 +12,6 @@ class Index extends MySQL
         return (int) $totalCount['count'];
         $this->dataBaseDisconnect();
     }
-
     public function get5Indexdata($nowPage)
     {
         $sql = "SELECT * FROM mst_todo ORDER BY id ASC LIMIT :start,:max";
@@ -33,9 +32,5 @@ class Index extends MySQL
         return $results;
         $this->dataBaseDisconnect();
     }
-
 }
-
-
-
 ?>

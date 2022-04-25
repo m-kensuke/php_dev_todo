@@ -1,6 +1,5 @@
 <?php
 require_once "class/delete.php";
-
 $id = $_POST['delete'];
 $delete = new Delete($id);
 $delete->delete();
