@@ -1,22 +1,24 @@
 <?php
-require "mysql.php";
-require "page.php";
+require_once "class/search.php";
+//require_once "class/mysql.php";
+require_once "class/page.php";
 
-$search = $_GET['search']; //検索ワード 
-$like_search = "%".$search."%";
+
+$search_word = $_GET['search']; //検索ワード 
+$like_search = "%".$search_word."%";
 
 //GETメソッドで検索ワードを受けたら実行
-if($search)
+if($search_word)
 {
-    $mysql = new MySQL();
-    $totalCount = $mysql->searchDataCount($like_search);
+    $search = new Search();
+    $totalCount = $search->searchDataCount($like_search);
     $searchPage = new SearchResultPage();
-    $totalPage = $searchPage->totalSearchPage($totalCount);
+    $totalPage = $searchPage->totalPage($totalCount);
     $nowPage = $searchPage->nowPage();
-    $results = $mysql->get5SearchData($like_search, $nowPage);
+    $results = $search->get5SearchData($like_search, $nowPage);
     $previewNext = $searchPage->previewNext($nowPage, $totalPage);
 }
-if($search == null)
+if($search_word == null)
 {
     echo '検索ワードを入力してください';
     echo '<br /><br />';
