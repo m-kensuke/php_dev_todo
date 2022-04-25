@@ -1,16 +1,23 @@
-<?php include 'inc/head.php'; ?>
-<?php require_once "search_result.php"; ?>
+<?php 
+//$GET['search_word']の有無でToDOリストか検索ページか
+if(isset($_GET['search_word'])) require_once "search_result.php"; 
+if(!isset($_GET['search_word'])) require_once "index.php";
+?>
+
+<?php include 'inc/head.php';?>
 <body class="pl-4 pr-4">
 <header>
     <div class="mt-5 mb-3">
-        <h1>Search Result Page</h1>
+        <?php if(isset($_GET['search_word'])) :?>
+            <h1>Search ToDo Page</h1>
+        <?php endif;?>
+        <?php if(!isset($_GET['search_word'])) :?>
+            <h1>ToDo Page</h1>
+        <?php endif;?>
     </div>
 </header>
-<div class="">
-    <!--検索結果表示-->
-    <p>検索ワード：<?php echo $search_word; ?><br /></p>
-    <p>ヒット件数：<?php echo $totalCount; ?><br /><br /></p>
-</div>
+<?php include 'inc/create_btn.php'; ?>
+<?php include 'inc/search_count.php'; ?>
 <!--ToDoリスト表示-->
 <div class="">
     <table class="table table-striped text-center">
@@ -41,9 +48,10 @@
     </table>
 </div>
 <div class="btn btn-outline-secondary">
-    <?php $searchPage->pageSearchDisplay($nowPage, $totalPage, $previewNext, $search_word); ?>
+    <?php if(isset($_GET['search_word'])) $searchPage->pageSearchDisplay($nowPage, $totalPage, $previewNext, $search_word); ?>
+    <?php if(!isset($_GET['search_word'])) $page->pageDisplay($nowPage, $totalPage, $previewNext); ?>
 </div>
-<a href='./index_display.php' style='padding: 5px;'>ToDo一覧</a>
+
 <?php include 'inc/bootstrap.php';?>
 </body>
 </html>

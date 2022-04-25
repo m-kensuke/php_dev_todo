@@ -10,22 +10,18 @@ class Branch
 			header('Location: ../create_and_edit.php?edit='.$id);
 			exit();
 		}
-		
 		if(isset($_POST['delete']) == true)
 		{
 			$id = $_POST['delete'];
 			$id = htmlspecialchars($id,ENT_QUOTES,'UTF-8');
 			header('Location: ../delete_check.php?delete='.$id);
-			//header('Location: delete.php?delete='.$id);
 			exit();
 		}
-		
 		if(isset($_POST['search_word']) == true)
 		{
-			$search = $_POST['search_word'];
-			//$search = htmlspecialchars($search,ENT_QUOTES,'UTF-8');
-			header('Location: ../search_result_display.php?search='.$search);
-			//header('Location: index_search_display.php?search='.$search);
+			$search_word = $_POST['search_word'];
+			//header('Location: ../search_result_display.php?search_word='.$search_word);
+			header('Location: ../display.php?search_word='.$search_word);
 		}
 	}
 }
