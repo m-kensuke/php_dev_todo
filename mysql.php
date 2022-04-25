@@ -1,5 +1,5 @@
 <?php
-//namespace Dbconnect;
+define('MAX_VIEW', 5);//最大５件表示
 class MySQL
 {
     //protected  $sql;
@@ -68,8 +68,8 @@ class MySQL
             $stmt->bindValue(":max", MAX_VIEW,PDO::PARAM_INT);
         }
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-        return $result;
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+        return $results;
         $this->dataBaseDisconnect();
     }
 
@@ -93,8 +93,8 @@ class MySQL
             $stmt->bindValue(":max",MAX_VIEW,PDO::PARAM_INT);
         }        
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
         $this->dataBaseDisconnect();
     }
 
@@ -106,23 +106,6 @@ class MySQL
     }
     
 }
-define('MAX_VIEW', 5);//最大５件表示
-/*$sql = "SELECT COUNT(*) AS count FROM mst_todo";
-$data = null;
-$mysql = new MySQL($sql, $data);
-$result = $mysql->dataCount();
-var_dump($result);*/
 
-/*$sql = "SELECT COUNT(*) AS count FROM mst_todo WHERE title LIKE :search";
-$like_search = "s";
-$mysql = new MySQL($sql);
-$result = $mysql->searchDataCount($like_search);
-var_dump($result);*/
 
-/*$sql = "SELECT * FROM mst_todo WHERE title LIKE :search LIMIT :start,:max";
-$like_search = "s";
-$mysql = new MySQL($sql);
-$nowPage = 2;
-$result = $mysql->get5SearchData($like_search, $nowPage);
-var_dump($result);*/
 ?>

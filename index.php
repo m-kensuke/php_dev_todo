@@ -12,6 +12,5 @@ $totalPage = $page->totalPage($totalCount);
 $nowPage = $page->nowPage($totalPage);
 $results = $index->get5IndexData($nowPage);
 $previewNext =  $page->previewNext($nowPage, $totalPage);
-//indexdisplayに表示は任せる
-
+//index_display.phpに表示は任せる
 ?>
