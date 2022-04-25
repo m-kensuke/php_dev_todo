@@ -27,13 +27,13 @@ class Page extends DBconnect
     public function pageDisplay($nowPage, $totalPage, $previewNext)
     {
         //ページ番号表示
-        if ($nowPage > 1) echo "<a href='./index_display.php?page_no=$previewNext[0]' style='padding: 5px'>前へ</a>";
+        if ($nowPage > 1) echo "<a href='./display.php?page_no=$previewNext[0]' style='padding: 5px'>前へ</a>";
         for ($n = 1; $n <= $totalPage; $n ++)
         {
             if ($n == $nowPage) echo "<span style='padding: 5px;'>$nowPage</span>";
-	        if($n != $nowPage) echo "<a href='./index_display.php?page_no=$n' style='padding: 5px;'>$n</a>";
+	        if($n != $nowPage) echo "<a href='./display.php?page_no=$n' style='padding: 5px;'>$n</a>";
         }
-        if ($nowPage < $totalPage) echo "<a href='./index_display.php?page_no=$previewNext[1]' style='padding: 5px;'>次へ</a>";
+        if ($nowPage < $totalPage) echo "<a href='./display.php?page_no=$previewNext[1]' style='padding: 5px;'>次へ</a>";
     }
 }
 class SearchResultPage extends Page
@@ -48,13 +48,14 @@ class SearchResultPage extends Page
     public function pageSearchDisplay($nowPage, $totalPage, $previewNext, $search_word)
     {
         //ページ番号
-        if ($nowPage > 1) echo "<a href='./search_result_display.php?page_no=$previewNext[0]&search_word=$search_word' style='padding: 5px'>前へ</a>";
+        if ($nowPage > 1) echo "<a href='./display.php?page_no=$previewNext[0]&search_word=$search_word' style='padding: 5px'>前へ</a>";
         for ($n = 1; $n <= $totalPage; $n ++)
         {
             if ($n == $nowPage) echo "<span style='padding: 5px;'>$nowPage</span>";
-            if($n != $nowPage) echo "<a href='./search_result_display.php?page_no=$n&search_word=$search_word' style='padding: 5px;'>$n</a>";
+            if($n != $nowPage) echo "<a href='./display.php?page_no=$n&search_word=$search_word' style='padding: 5px;'>$n</a>";
         }   
-        if ($nowPage < $totalPage)echo "<a href='./search_result_display.php?page_no=$previewNext[1]&search_word=$search_word' style='padding: 5px;'>次へ</a>";
+        if ($nowPage < $totalPage)echo "<a href='./display.php?page_no=$previewNext[1]&search_word=$search_word' style='padding: 5px;'>次へ</a>";
+        echo '<a href="display.php" style="padding: 5px;">ToDo一覧</a>';
     }
 }
 ?>

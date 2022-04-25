@@ -1,5 +1,5 @@
-<?php include 'inc/head.php'; ?>
 <?php require_once 'class/check.php'?>
+<?php include 'inc/head.php'; ?>
 <body>
 <?php
 if(isset($_POST['id'])) $id = $_POST['id'];

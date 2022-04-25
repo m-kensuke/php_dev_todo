@@ -20,7 +20,8 @@ class Branch
 		if(isset($_POST['search_word']) == true)
 		{
 			$search_word = $_POST['search_word'];
-			header('Location: ../search_result_display.php?search_word='.$search_word);
+			//header('Location: ../search_result_display.php?search_word='.$search_word);
+			header('Location: ../display.php?search_word='.$search_word);
 		}
 	}
 }

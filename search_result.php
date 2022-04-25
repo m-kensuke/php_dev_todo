@@ -1,8 +1,6 @@
 <?php
 require_once "class/search.php";
 require_once "class/page.php";
-
-
 $search_word = $_GET['search_word']; //検索ワード 
 $like_search = "%".$search_word."%";
 

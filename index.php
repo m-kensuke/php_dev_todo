@@ -1,8 +1,6 @@
 <?php
 require_once ("class/indexclass.php");
-//require_once ("class/mysql.php");
 require_once ("class/page.php");
-
 $index = new Index();
 $page  =new Page();
 $totalCount = $index->dataCount();

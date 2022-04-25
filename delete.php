@@ -8,6 +8,6 @@ $delete->delete();
 <?php include 'inc/head.php'?>
 <body>
 	<p>削除しました。<br /><br /></p>
-	<a href="index_display.php">戻る</a>
+	<a href="display.php">戻る</a>
 </body>
 </html>
